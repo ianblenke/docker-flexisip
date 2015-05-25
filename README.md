@@ -22,8 +22,11 @@ Now you can merrily update the local `flexisip/flexisip.conf` file and start a c
 
 If using a host volume seems less than ideal, you can always pull that configuration via a `--volumes-from` from a stopped "data" container:
 
-    docker run -ti --name flexisip-data -v /etc/flexisip ianblenke/flexisip true
-    docker run -d --name flexisip --net=host --volumes-from flexisip-data ianblenke/flexisip
+    docker run -d --name flexisip-data \
+               -v /etc/flexisip ianblenke/flexisip true
+
+    docker run -d --name flexisip \
+               --net=host --volumes-from flexisip-data ianblenke/flexisip
 
 If you don't mind putting your configuration into a docker image, you could derive your own container image with your own custom configuration from the base image:
 
@@ -39,13 +42,17 @@ If you ran that, you could now skip the volume mounting step entirely:
 
 The default CMD implied here is:
 
-    docker run -d --net=host -v `pwd`/flexisip:/etc/flexisip ianblenke/flexisip \
-        flexisip -c /etc/flexisip/flexisip.conf
+    docker run -d --name flexisip \
+               --net=host \
+               -v `pwd`/flexisip:/etc/flexisip ianblenke/flexisip \
+               flexisip -c /etc/flexisip/flexisip.conf
 
 Individual settings can also be specified on the command line. Here is an example that sets the global debug flag to true:
 
-    docker run -d --net=host -v `pwd`/flexisip:/etc/flexisip ianblenke/flexisip \
-        flexisip -c /etc/flexisip/flexisip.conf -s global/debug=true
+    docker run -d --name flexisip \
+               --net=host \
+               -v `pwd`/flexisip:/etc/flexisip ianblenke/flexisip \
+               flexisip -c /etc/flexisip/flexisip.conf -s global/debug=true
 
 For documentation regarding the config file sections and options, see the [Flexisip:module_list](https://wiki.linphone.org/wiki/index.php/Flexisip:module_list) wiki page.
 
@@ -57,7 +64,8 @@ There is also preliminary snmp support included. You can grab the example snmpd.
 
 With this, you can specify the custom configuration at runtime:
 
-    docker run -d --net=host \
+    docker run -d --name flexisip \
+               --net=host \
                -v `pwd`/flexisip:/etc/flexisip \
                -v snmpd.conf:/etc/snmp/snmpd.conf \
                ianblenke/flexisip
