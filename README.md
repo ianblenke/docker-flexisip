@@ -57,20 +57,26 @@ There is also preliminary snmp support included. You can grab the example snmpd.
 
 With this, you can specify the custom configuration at runtime:
 
-    docker run -d --net=host -v `pwd`/flexisip:/etc/flexisip -v snmpd.conf:/etc/snmp/snmpd.conf ianblenke/flexisip
+    docker run -d --net=host \
+               -v `pwd`/flexisip:/etc/flexisip \
+               -v snmpd.conf:/etc/snmp/snmpd.conf \
+               ianblenke/flexisip
 
 After running the server above, it is possible to use this image to snmp query the server:
 
     docker run -it --rm --net=host -v snmpd.conf:/etc/snmp/snmpd.conf ianblenke/flexisip \
-      snmpwalk -m FLEXISIP-MIB  -v 2c -c public -Of localhost FLEXISIP-MIB::flexisipMIB
+      snmpwalk -m FLEXISIP-MIB  -v 2c -c public \
+               -Of localhost FLEXISIP-MIB::flexisipMIB
 
     docker run -it --rm --net=host -v snmpd.conf:/etc/snmp/snmpd.conf ianblenke/flexisip \
-      snmpget -m FLEXISIP-MIB -v 2c -c public -Of localhost FLEXISIP-MIB::flexisipMIB.flexisip.global.debug.0
+      snmpget -m FLEXISIP-MIB -v 2c -c public \
+              -Of localhost FLEXISIP-MIB::flexisipMIB.flexisip.global.debug.0
 
 The running server configuration can be also changed on the fly:
 
     docker run -it --rm --net=host -v snmpd.conf:/etc/snmp/snmpd.conf ianblenke/flexisip \
-      snmpset -m FLEXISIP-MIB  -v 2c -c private localhost FLEXISIP-MIB::flexisipMIB.flexisip.global.debug.0 i 1
+      snmpset -m FLEXISIP-MIB  -v 2c -c private \
+               localhost FLEXISIP-MIB::flexisipMIB.flexisip.global.debug.0 i 1
 
 For documentation regarding snmp, see the [Flexisip:snmp](https://wiki.linphone.org/wiki/index.php/Flexisip:snmp) wiki page.
 
