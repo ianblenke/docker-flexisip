@@ -31,6 +31,8 @@ RUN flexisip --dump-default all > /etc/flexisip/flexisip.conf
 RUN mkdir -p ~/.snmp/mibs /etc/snmp ; \
     flexisip --dump-mibs > ~/.snmp/mibs/fleximib.txt
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y snmpd
+
 COPY snmpd.conf /etc/snmp/snmpd.conf 
 
 VOLUME /etc/flexisip
