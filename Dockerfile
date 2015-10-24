@@ -1,7 +1,7 @@
 FROM debian:wheezy
 MAINTAINER Ian Blenke <ian@blenke.com>
 
-ENV VERSION 1.0.4-1
+ENV VERSION 1.0.4-24
 
 # Prepare the Debian non-free and backports repositories for dependencies
 RUN echo deb http://http.us.debian.org/debian wheezy non-free > /etc/apt/sources.list.d/non-free.list
