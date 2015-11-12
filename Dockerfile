@@ -1,7 +1,7 @@
 FROM centos:7
 MAINTAINER Ian Blenke <ian@blenke.com>
 
-ENV VERSION 1.0.5
+ENV VERSION 1.0.6
 
 ADD Belledonne.repo /etc/yum.repos.d/Belledonne.repo
 
